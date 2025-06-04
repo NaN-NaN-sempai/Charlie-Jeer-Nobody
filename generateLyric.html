@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            margin: 0;
+        }
+        .phrase, .audio,
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .phrase {
+            border: none;
+            outline: none;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        #listJson {
+            border: 1px solid white;
+            padding: 5px
+        }
+
+        #listJson > div {
+            border: 1px solid white;
+            padding: 5px
+        }
+        
+        .phrase,
+        #listJson > div > span {
+            background-color: #1f1f1f;
+            border-radius: 20px;
+        }
+        #listJson > div > span {
+            padding-inline: 10px;
+        }
+        span.type0, .phrase[data-type="0"] {
+            color: #88c9ff;
+        }
+        span.type1, .phrase[data-type="1"] {
+            color: #5eb566;
+        }
+        span.type2, .phrase[data-type="2"] {
+            color: #ff8c00;
+        }
+        span.type3, .phrase[data-type="3"] {
+            color: #ff0000;
+        }
+        span.type4, .phrase[data-type="4"] {
+            color: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+    <audio class="audio" controls autoplay>
+        <source src="Nobody.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+<br>
+    <span> playback knob</span>
+    <input type="range" id="playbackKnob" min="-1" max="1" step="0.01" value="0">
+    <br>
+    <span>speed</span>
+    <input type="range" id="speed" min=".01" max="2" step="0.01" value="1">
+    <br>
+    <button id="resetSpeed">reset speed</button>
+
+    <button onclick="audio.currentTime += 10">add 10s</button>
+
+    <p id="outputMs"></p>
+
+    <input type="text" id="phrase" class="phrase" placeholder="phrase">
+    <br>
+    <input type="number" id="type" class="type" placeholder="type">
+    <button onclick="setType(this)">set 0</button>
+    <button onclick="setType(this)">set 1</button>
+    <button onclick="setType(this)">set 2</button>
+    <button onclick="setType(this)">set 3</button>
+    <br>
+    <input type="number" id="begin" class="begin" placeholder="begin" step="0.1" value="0">
+    <button id="addBegin">+</button>
+    <button onclick="audio.currentTime = begin.value">play at</button>
+    <br>
+    <input type="number" id="end" class="end" placeholder="end" step="0.1" value="0">
+    <button id="addEnd">+</button>
+    <button onclick="audio.currentTime = end.value">play at</button>
+<br>
+<br>
+    <button id="add">add item</button>
+    <button id="copy">copy list json</button>
+    <button id="empty">clear list</button>
+
+
+    <br>
+    <br>
+    <br>
+
+    <div id="listJson">
+
+    </div>
+
+</body>
+
+<script>
+
+    /* 
+    Missing you is my pleasure, but loving you is insane
+    I was good with words 'til you was standing in my way
+    I don't wanna touch nobody 'cause of you
+
+    I don't wanna touch nobody
+    Didn't wanna lose your love, didn't wanna feel that pain
+    Didn't wanna close the door when you were calling out my name
+    I don't wanna touch nobody 'cause you
+    I don't wanna touch nobody
+
+    How could I forget you, gave your love to me
+    I was good with words 'til you were standing next to me
+    I don't wanna touch nobody 'cause of you
+    I don't wanna touch nobody
+    You don't wanna lose a lover, didn't wanna feel that pain
+    Does this fire have shadows?
+    Or should we pray for rain?
+    I don't wanna touch nobody 'cause of you
+    I don't wanna touch nobody
+    (I don't wanna nobody 'cause you)
+
+    Missing you is my pleasure
+    But loving you is insane
+    */
+
+    const get = () => {
+        let stored = localStorage.lyricList;
+
+        if(!stored) localStorage.lyricList = stored = '[]'
+
+        return JSON.parse(stored);
+    }
+    const set = (list) => localStorage.lyricList = JSON.stringify(list);
+
+    let currentTime = 0;
+
+    const audio = document.querySelector('.audio');
+    const outputMs = document.querySelector('#outputMs');
+    audio.addEventListener('timeupdate', () => outputMs.innerHTML = currentTime = audio.currentTime);
+
+    document.querySelector('#speed').addEventListener('input', () => audio.playbackRate = document.querySelector('#speed').value);
+    document.querySelector('#resetSpeed').addEventListener('click', () => {
+        audio.playbackRate = 1;
+        document.querySelector('#speed').value = 1;
+    });
+
+    resetSpeed.addEventListener('click', () => audio.currentTime = 0);
+
+    isChangeing = false;
+    setInterval(() => {
+        if(isChangeing)
+            audio.currentTime += parseFloat(playbackKnob.value);
+    }, 1)
+    playbackKnob.addEventListener('input', () => {
+        isChangeing = true;
+    })
+    playbackKnob.addEventListener('mouseout', () => {        
+        playbackKnob.value = 0;
+        isChangeing = false;
+    });
+
+    const phrase = document.querySelector('.phrase');
+    const begin = document.querySelector('.begin');
+    const end = document.querySelector('.end');
+
+
+    const update = (item, isIndex, dom) => {
+        console.log(item, isIndex, dom);
+        
+        if(isIndex) {
+            let list = get();
+            item = list.reverse()[item];
+
+            let forAttr = dom.dataset.for;
+
+            item[forAttr] = dom.value;
+            console.log(item, forAttr, dom.value);
+            
+            set(list.reverse());
+            setupList();
+        } else {
+            let list = get();
+            // find this item
+            const index = list.indexOf(item);
+            list[index] = {...item};
+            set(list);
+            setupList();
+        }
+        
+    }
+    const setupList = () => {
+        const list = get();
+        document.querySelector('#listJson').innerHTML = list.reverse().map((item, index) => `
+        <div>
+            <span class="type${item.type}">${item.phrase}</span>
+            <br>
+            type: <input type="number" value="${item.type}" data-for="type" onchange="update(${list.length - index}, true, this)" />
+            <br>
+            start: ${item.begin} <button onclick="audio.currentTime = '${item.begin}'">play at</button>
+            <br>
+            end: ${item.end} <button onclick="audio.currentTime = '${item.end}'">play at</button>
+            <br>
+            <button onclick="remove(${list.indexOf(list.length - index)})">delete</button>
+        </div><br>`).join('');
+    }
+    setupList();
+    const add = () => {
+        const list = get();
+        list.push({phrase: phrase.value, type: type.value, begin: begin.value, end: end.value});
+        set(list);
+        phrase.value = begin.value = end.value = '';
+        setupList();
+    }
+    const remove = (index) => {
+        const list = get();
+        list.splice(index, 1);
+        set(list);
+        setupList();
+    }
+    document.querySelector('#addBegin').addEventListener('click', ()=>{
+        document.querySelector('.begin').value = currentTime
+    });
+    document.querySelector('#addEnd').addEventListener('click', ()=>{
+        document.querySelector('.end').value = currentTime
+    });
+
+    document.querySelector('#copy').addEventListener('click', () => {
+
+        let list = get();
+        list.push({
+            endFile: true + "",
+            end: audio.duration + ""
+        })
+
+        navigator.clipboard.writeText(JSON.stringify(list));
+        alert('Copied to clipboard');
+    });
+
+    document.querySelector("#add").addEventListener('click', add);
+
+    type.addEventListener('input', () => {
+        phrase.dataset.type = type.value;
+    })
+
+    const setType = (dom) => {        
+        let evtType = dom.innerHTML.replace('set ', '');
+        
+        type.value = evtType;
+        phrase.dataset.type = evtType;
+    }
+
+    empty.addEventListener('click', () => {
+        const list = get();
+        list.length = 0;
+        set(list);
+        setupList();
+    })
+</script>
+
+</html>
