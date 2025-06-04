@@ -342,10 +342,11 @@
 
         list.forEach((item, index) => {
             if (item.endFile == "true" ) {
-                    image.classList.toggle("onLyric", false);
-
                 if (infinite)
-                    return setTimeout(generateLyric, parseFloat(item.end) * 1000);
+                    return setTimeout(() => {
+                        image.classList.toggle("onLyric", false);
+                        generateLyric(infinite);
+                    }, parseFloat(item.end) * 1000);
                 else 
                     return;
             }
