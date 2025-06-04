@@ -329,8 +329,10 @@
     }
     document.querySelector("button").addEventListener('click', () => addItem("hello world"));
 
+    let image = document.querySelector('.coverImage');
     const timeoutList = [];
     const generateLyric = (infinite = false) => {
+        image.classList.toggle("onLyric", true);
         lyricDom.innerHTML = '';
         const list = lyric;
 
@@ -340,6 +342,8 @@
 
         list.forEach((item, index) => {
             if (item.endFile == "true" ) {
+                    image.classList.toggle("onLyric", false);
+
                 if (infinite)
                     return setTimeout(generateLyric, parseFloat(item.end) * 1000);
                 else 
@@ -347,7 +351,6 @@
             }
 
             if(item.phrase == "--focus") {
-                let image = document.querySelector('.coverImage');
 
                 let craete = setTimeout(() => {
                     image.classList.toggle("onLyric", false);
