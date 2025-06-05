@@ -14,6 +14,7 @@
 
         body {
             background-color: black;
+            overflow: hidden;
         }
         * {
             pointer-events: none;
@@ -78,6 +79,13 @@
 
         .coverImage.onLyric {
             max-height: 70vh;
+            left: 70vw;
+        }
+        .coverImage.onLyric[data-type="2"] {
+            left: 30vw;
+            animation: bobbing calc(var(--pulse) / 4) ease-in-out infinite alternate;
+        }
+        .lyric[data-type="2"] {
             left: 70vw;
         }
 
@@ -167,7 +175,7 @@
 
         @keyframes moving {
             0% {
-                transform: translate(-50%, -50%) scale(1);
+                transform: translate(-45%, -50%) scale(1);
             }
             25% {
                 transform: translate(-50%, -50%) scale(1.1);
@@ -179,7 +187,7 @@
                 transform: translate(-50%, -50%) scale(1.2);
             }
             100% {
-                transform: translate(-50%, -50%) scale(1);
+                transform: translate(-55%, -50%) scale(1);
             }
         }
 
@@ -281,7 +289,9 @@
 
 
 <script>
-    const lyric = [{"phrase":"I don't wanna touch nobody","type":"2","begin":"0.238198","end":"1.602972"},{"phrase":"Missing you is my pleasure","type":"0","begin":"2.70102","end":"4.172111"},{"phrase":"But loving you is insane","type":"0","begin":"4.512806","end":"5.899444"},{"phrase":"I was good with words","type":"0","begin":"6.438175","end":"7.636727"},{"phrase":"'til you was standing in my way","type":"3","begin":"7.815134","end":"9.728859"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"11.69469","end":"13.728605"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"15.522289","end":"16.813423"},{"phrase":"Didn't wanna lose your love,","type":"0","begin":"17.958279","end":"19.22054"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"19.743024","end":"21.234061"},{"phrase":"Didn't wanna close the door when","type":"0","begin":"21.677748","end":"23.104105"},{"phrase":"you were calling out my name","type":"3","begin":"23.183302","end":"24.878894"},{"phrase":"I don't wanna touch nobody 'cause you","type":"4","begin":"27","end":"28.952041"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"30.7","end":"31.951861"},{"phrase":"I don't wanna touch nobody","type":"2","begin":"63.2","end":"64.288703"},{"phrase":"How could I forget you,","type":"0","begin":"65.5","end":"67.011335"},{"phrase":"gave your love to me","type":"0","begin":"67.4","end":"68.384333"},{"phrase":"I was good with words","type":"0","begin":"69.2","end":"70.534106"},{"phrase":"'til you were standing next to me","type":"3","begin":"70.604263","end":"72.3"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"74.519078","end":"76.526429"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"78.229404","end":"79.729966"},{"phrase":"You don't wanna lose a lover,","type":"0","begin":"80.74","end":"81.951894"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"82.58583","end":"83.901511"},{"phrase":"Does this fire have shadows?","type":"0","begin":"84.447941","end":"85.971925"},{"phrase":"Or should we pray for rain?","type":"0","begin":"86.3","end":"87.721723"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"89.718423","end":"91.7"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"93.432406","end":"94.963208"},{"phrase":"Missing you is my pleasure","type":"2","begin":"158.7","end":"160.127257"},{"phrase":"But loving you is insane","type":"2","begin":"166.2","end":"167.747234"},{"phrase":"--focus","type":"","begin":"32.646709","end":"61.5"},{"phrase":"--focus","type":"","begin":"95.5","end":"156.401448"},{"endFile":"true","end":"173.64898"}]
+    let params = new URLSearchParams(document.location.search);
+    let audioless = params.get("audioless") == "1";
+    const lyric = [{"phrase":"I don't wanna touch nobody","type":"2","begin":"0.238198","end":"1.602972"},{"phrase":"Missing you is my pleasure","type":"0","begin":"2.70102","end":"4.172111"},{"phrase":"But loving you is insane","type":"0","begin":"4.512806","end":"5.899444"},{"phrase":"I was good with words","type":"0","begin":"6.438175","end":"7.636727"},{"phrase":"'til you was standing in my way","type":"3","begin":"7.815134","end":"9.728859"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"11.69469","end":"13.728605"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"15.522289","end":"16.813423"},{"phrase":"Didn't wanna lose your love,","type":"0","begin":"17.958279","end":"19.22054"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"19.743024","end":"21.234061"},{"phrase":"Didn't wanna close the door when","type":"0","begin":"21.677748","end":"23.104105"},{"phrase":"you were calling out my name","type":"3","begin":"23.183302","end":"24.878894"},{"phrase":"I don't wanna touch nobody 'cause you","type":"4","begin":"27","end":"28.952041"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"30.7","end":"31.951861"},{"phrase":"I don't wanna touch nobody","type":"2","begin":"63.2","end":"64.288703"},{"phrase":"How could I forget you,","type":"0","begin":"65.5","end":"67.011335"},{"phrase":"gave your love to me","type":"0","begin":"67.4","end":"68.384333"},{"phrase":"I was good with words","type":"0","begin":"69.2","end":"70.534106"},{"phrase":"'til you were standing next to me","type":"3","begin":"70.604263","end":"72.3"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"74.519078","end":"76.526429"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"78.229404","end":"79.729966"},{"phrase":"You don't wanna lose a lover,","type":"0","begin":"80.74","end":"81.951894"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"82.58583","end":"83.901511"},{"phrase":"Does this fire have shadows?","type":"0","begin":"84.447941","end":"85.971925"},{"phrase":"Or should we pray for rain?","type":"0","begin":"86.3","end":"87.721723"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"89.718423","end":"91.7"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"93.432406","end":"94.963208"},{"phrase":"Missing you is my pleasure","type":"2","begin":"158.7","end":"160.127257"},{"phrase":"But loving you is insane","type":"2","begin":"166.2","end":"167.747234"},{"phrase":"--focus","type":"2","begin":"32.646709","end":"61.5"},{"phrase":"--focus","type":"","begin":"95.5","end":"156.401448"},{"endFile":"true","end":"173.64898"}]
     const lyricDom = document.querySelector('.lyric');
 
     const animate = (item) => {
@@ -327,7 +337,7 @@
 
         return el;
     }
-    document.querySelector("button").addEventListener('click', () => addItem("hello world"));
+    document.querySelector(".debugButton").addEventListener('click', () => addItem("hello world"));
 
     let image = document.querySelector('.coverImage');
     const timeoutList = [];
@@ -335,6 +345,7 @@
         image.classList.toggle("onLyric", true);
         lyricDom.innerHTML = '';
         const list = lyric;
+        const debugSpeed = 1000;
 
         timeoutList.forEach((item) => clearTimeout(item));
 
@@ -342,24 +353,22 @@
 
         list.forEach((item, index) => {
             if (item.endFile == "true" ) {
-                if (infinite)
-                    return setTimeout(() => {
-                        image.classList.toggle("onLyric", false);
-                        generateLyric(infinite);
-                    }, parseFloat(item.end) * 1000);
-                else 
-                    return;
+                return setTimeout(() => {
+                    image.classList.toggle("onLyric", false);
+                    if (infinite) generateLyric(infinite);
+                }, parseFloat(item.end) * debugSpeed);
             }
 
             if(item.phrase == "--focus") {
-
                 let craete = setTimeout(() => {
                     image.classList.toggle("onLyric", false);
-                }, parseFloat(item.begin) * 1000);
+                }, parseFloat(item.begin) * debugSpeed);
 
-                let destroy = setTimeout(() => {
+                let destroy = setTimeout(() => {                    
+                    image.dataset.type = item.type;
+                    lyricDom.dataset.type = item.type;
                     image.classList.toggle("onLyric", true);
-                }, parseFloat(item.end) * 1000);
+                }, parseFloat(item.end) * debugSpeed);
 
                 timeoutList.push(craete, destroy);
 
@@ -373,11 +382,11 @@
             let create = setTimeout(() => {
                 animate(el).open();
                 organizeItens();
-            }, parseFloat(item.begin) * 1000);
+            }, parseFloat(item.begin) * debugSpeed);
 
             destroy = setTimeout(() => {
                 removeEl(el);
-            }, parseFloat(item.end) * 1000);
+            }, parseFloat(item.end) * debugSpeed);
 
             timeoutList.push(create, destroy);
         });
@@ -389,6 +398,14 @@
     button.addEventListener('click', () => {
         if(lock) return;
         lock = true;
+
+        // go fullscreen
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            document.documentElement.requestFullscreen();
+        }
+
         button.classList.toggle("lock", true);
         const audio = document.querySelector('#audio');
 
@@ -404,7 +421,11 @@
             button.classList.toggle("lock", false);
         }, 5000);
     })
-    //generateLyric()
+    
+    if(audioless){
+        button.style.display = "none";
+        generateLyric(true);
+    }
 </script>
 
 <!-- coverImage spread dropShadow -->
