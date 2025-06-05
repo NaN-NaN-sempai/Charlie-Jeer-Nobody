@@ -16,6 +16,7 @@
             background-color: black;
             overflow: hidden;
         }
+
         * {
             pointer-events: none;
         }
@@ -81,10 +82,12 @@
             max-height: 70vh;
             left: 70vw;
         }
+
         .coverImage.onLyric[data-type="2"] {
             left: 30vw;
             animation: bobbing calc(var(--pulse) / 4) ease-in-out infinite alternate;
         }
+
         .lyric[data-type="2"] {
             left: 70vw;
         }
@@ -118,15 +121,18 @@
             opacity: 0;
             transition: all .2s ease-in-out;
         }
+
         .lyric .item[data-type="0"] {
             animation: bobbing calc(var(--pulse) / 4) ease-in-out infinite alternate;
         }
+
         .lyric .item[data-type="2"] {
             animation: showUp calc(var(--pulse) * .9) ease-in-out infinite alternate;
-            color: rgba(255, 255, 255, 0.3); 
+            color: rgba(255, 255, 255, 0.3);
             filter: blur(.7px);
         }
-        .lyric .item[data-type="3"] { 
+
+        .lyric .item[data-type="3"] {
             animation: jumping calc(var(--pulse) / 4) ease-in-out infinite alternate;
             font-size: 1.5em;
             color: white;
@@ -139,7 +145,8 @@
                 calc(var(--size) * -1) calc(var(--size) * 1) var(--blur) var(--color),
                 calc(var(--size) * 1) calc(var(--size) * 1) var(--blur) var(--color);
         }
-        .lyric .item[data-type="4"] { 
+
+        .lyric .item[data-type="4"] {
             animation: moving calc(var(--pulse) / 2) ease-in-out infinite alternate;
             color: red;
             --size: .5px;
@@ -156,6 +163,7 @@
             0% {
                 transform: translate(-50%, -50%) rotate(-2deg);
             }
+
             100% {
                 transform: translate(-50%, -50%) rotate(2deg);
             }
@@ -165,9 +173,11 @@
             0% {
                 transform: translate(-50%, -50%) scale(1);
             }
+
             50% {
                 transform: translate(-50%, -50%) scale(1.1);
             }
+
             100% {
                 transform: translate(-50%, -50%) scale(1);
             }
@@ -177,15 +187,19 @@
             0% {
                 transform: translate(-45%, -50%) scale(1);
             }
+
             25% {
                 transform: translate(-50%, -50%) scale(1.1);
             }
+
             50% {
                 transform: translate(-50%, -50%) scale(1);
             }
+
             75% {
                 transform: translate(-50%, -50%) scale(1.2);
             }
+
             100% {
                 transform: translate(-55%, -50%) scale(1);
             }
@@ -193,11 +207,12 @@
 
         @keyframes showUp {
             0% {
-                color: rgba(255, 255, 255, 0); 
+                color: rgba(255, 255, 255, 0);
                 transform: translate(-50%, -50%) rotate(-3deg);
             }
+
             100% {
-                color: rgba(255, 255, 255, 0.3); 
+                color: rgba(255, 255, 255, 0.3);
                 transform: translate(-50%, -50%) rotate(3deg);
             }
         }
@@ -208,7 +223,7 @@
             font-family: 'magnificChaos';
         }
 
-        body.debug .coverImage { 
+        body.debug .coverImage {
             display: none;
         }
 
@@ -238,11 +253,14 @@
             pointer-events: all;
             user-select: none;
         }
+
         #playAudio.lock {
             opacity: .5;
             cursor: not-allowed;
         }
-        #playAudio::after, #playAudio::before {
+
+        #playAudio::after,
+        #playAudio::before {
             position: absolute;
             width: 300px;
             left: -5px;
@@ -250,15 +268,19 @@
             opacity: 0;
             transition: all .5s ease-in-out;
         }
+
         #playAudio::after {
             content: 'Image: Landscape • Kingbee64 - Deviantart';
             top: 40px;
         }
+
         #playAudio::before {
             content: 'Song: Nobody • Charlie Jeer';
             top: 60px;
         }
-        #playAudio:hover::after, #playAudio:hover::before {
+
+        #playAudio:hover::after,
+        #playAudio:hover::before {
             opacity: 1;
         }
     </style>
@@ -291,14 +313,38 @@
 <script>
     let params = new URLSearchParams(document.location.search);
     let audioless = params.get("audioless") == "1";
-    const lyric = [{"phrase":"I don't wanna touch nobody","type":"2","begin":"0.238198","end":"1.602972"},{"phrase":"Missing you is my pleasure","type":"0","begin":"2.70102","end":"4.172111"},{"phrase":"But loving you is insane","type":"0","begin":"4.512806","end":"5.899444"},{"phrase":"I was good with words","type":"0","begin":"6.438175","end":"7.636727"},{"phrase":"'til you was standing in my way","type":"3","begin":"7.815134","end":"9.728859"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"11.69469","end":"13.728605"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"15.522289","end":"16.813423"},{"phrase":"Didn't wanna lose your love,","type":"0","begin":"17.958279","end":"19.22054"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"19.743024","end":"21.234061"},{"phrase":"Didn't wanna close the door when","type":"0","begin":"21.677748","end":"23.104105"},{"phrase":"you were calling out my name","type":"3","begin":"23.183302","end":"24.878894"},{"phrase":"I don't wanna touch nobody 'cause you","type":"4","begin":"27","end":"28.952041"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"30.7","end":"31.951861"},{"phrase":"I don't wanna touch nobody","type":"2","begin":"63.2","end":"64.288703"},{"phrase":"How could I forget you,","type":"0","begin":"65.5","end":"67.011335"},{"phrase":"gave your love to me","type":"0","begin":"67.4","end":"68.384333"},{"phrase":"I was good with words","type":"0","begin":"69.2","end":"70.534106"},{"phrase":"'til you were standing next to me","type":"3","begin":"70.604263","end":"72.3"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"74.519078","end":"76.526429"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"78.229404","end":"79.729966"},{"phrase":"You don't wanna lose a lover,","type":"0","begin":"80.74","end":"81.951894"},{"phrase":"didn't wanna feel that pain","type":"0","begin":"82.58583","end":"83.901511"},{"phrase":"Does this fire have shadows?","type":"0","begin":"84.447941","end":"85.971925"},{"phrase":"Or should we pray for rain?","type":"0","begin":"86.3","end":"87.721723"},{"phrase":"I don't wanna touch nobody 'cause of you","type":"4","begin":"89.718423","end":"91.7"},{"phrase":"I don't wanna touch nobody","type":"4","begin":"93.432406","end":"94.963208"},{"phrase":"Missing you is my pleasure","type":"2","begin":"158.7","end":"160.127257"},{"phrase":"But loving you is insane","type":"2","begin":"166.2","end":"167.747234"},{"phrase":"--focus","type":"2","begin":"32.646709","end":"61.5"},{"phrase":"--focus","type":"","begin":"95.5","end":"156.401448"},{"endFile":"true","end":"173.64898"}]
+
+
+    const pseudoTimeout = (callback, delay) => {
+        const start = performance.now();
+        const handle = { cancel: false };
+
+        const loop = (now) => {
+            if (handle.cancel) return;
+            if (now - start >= delay) {
+                callback();
+            } else {
+                requestAnimationFrame(loop);
+            }
+        };
+
+        requestAnimationFrame(loop);
+        return handle;
+    };
+
+    const clearPseudoTimeout = (handle) => {
+        if (handle) handle.cancel = true;
+    };
+
+
+    const lyric = [{ "phrase": "I don't wanna touch nobody", "type": "2", "begin": "0.238198", "end": "1.602972" }, { "phrase": "Missing you is my pleasure", "type": "0", "begin": "2.70102", "end": "4.172111" }, { "phrase": "But loving you is insane", "type": "0", "begin": "4.512806", "end": "5.899444" }, { "phrase": "I was good with words", "type": "0", "begin": "6.438175", "end": "7.636727" }, { "phrase": "'til you was standing in my way", "type": "3", "begin": "7.815134", "end": "9.728859" }, { "phrase": "I don't wanna touch nobody 'cause of you", "type": "4", "begin": "11.69469", "end": "13.728605" }, { "phrase": "I don't wanna touch nobody", "type": "4", "begin": "15.522289", "end": "16.813423" }, { "phrase": "Didn't wanna lose your love,", "type": "0", "begin": "17.958279", "end": "19.22054" }, { "phrase": "didn't wanna feel that pain", "type": "0", "begin": "19.743024", "end": "21.234061" }, { "phrase": "Didn't wanna close the door when", "type": "0", "begin": "21.677748", "end": "23.104105" }, { "phrase": "you were calling out my name", "type": "3", "begin": "23.183302", "end": "24.878894" }, { "phrase": "I don't wanna touch nobody 'cause you", "type": "4", "begin": "27", "end": "28.952041" }, { "phrase": "I don't wanna touch nobody", "type": "4", "begin": "30.7", "end": "31.951861" }, { "phrase": "I don't wanna touch nobody", "type": "2", "begin": "63.2", "end": "64.288703" }, { "phrase": "How could I forget you,", "type": "0", "begin": "65.5", "end": "67.011335" }, { "phrase": "gave your love to me", "type": "0", "begin": "67.4", "end": "68.384333" }, { "phrase": "I was good with words", "type": "0", "begin": "69.2", "end": "70.534106" }, { "phrase": "'til you were standing next to me", "type": "3", "begin": "70.604263", "end": "72.3" }, { "phrase": "I don't wanna touch nobody 'cause of you", "type": "4", "begin": "74.519078", "end": "76.526429" }, { "phrase": "I don't wanna touch nobody", "type": "4", "begin": "78.229404", "end": "79.729966" }, { "phrase": "You don't wanna lose a lover,", "type": "0", "begin": "80.74", "end": "81.951894" }, { "phrase": "didn't wanna feel that pain", "type": "0", "begin": "82.58583", "end": "83.901511" }, { "phrase": "Does this fire have shadows?", "type": "0", "begin": "84.447941", "end": "85.971925" }, { "phrase": "Or should we pray for rain?", "type": "0", "begin": "86.3", "end": "87.721723" }, { "phrase": "I don't wanna touch nobody 'cause of you", "type": "4", "begin": "89.718423", "end": "91.7" }, { "phrase": "I don't wanna touch nobody", "type": "4", "begin": "93.432406", "end": "94.963208" }, { "phrase": "Missing you is my pleasure", "type": "2", "begin": "158.7", "end": "160.127257" }, { "phrase": "But loving you is insane", "type": "2", "begin": "166.2", "end": "167.747234" }, { "phrase": "--focus", "type": "2", "begin": "32.646709", "end": "61.5" }, { "phrase": "--focus", "type": "", "begin": "95.5", "end": "156.401448" }, { "endFile": "true", "end": "173.64898" }]
     const lyricDom = document.querySelector('.lyric');
 
     const animate = (item) => {
         return {
             open: () => {
-                item.style.display = "block"; 
-                setTimeout(() => {
+                item.style.display = "block";
+                pseudoTimeout(() => {
                     item.style.opacity = 1;
                 }, 1)
             },
@@ -322,7 +368,7 @@
     const removeEl = (el) => {
         animate(el).close();
 
-        setTimeout(() => {
+        pseudoTimeout(() => {
             lyricDom.removeChild(el);
             organizeItens();
         }, 500);
@@ -330,7 +376,7 @@
 
     const addItem = (text) => {
         let el = document.createElement("span");
-        el.innerHTML = text; 
+        el.innerHTML = text;
         el.classList.add("item");
 
         lyricDom.appendChild(el);
@@ -347,24 +393,24 @@
         const list = lyric;
         const debugSpeed = 1000;
 
-        timeoutList.forEach((item) => clearTimeout(item));
+        timeoutList.forEach((item) => clearPseudoTimeout(item));
 
         console.log(list.map(item => parseFloat(item.end)));
 
         list.forEach((item, index) => {
-            if (item.endFile == "true" ) {
-                return setTimeout(() => {
+            if (item.endFile == "true") {
+                return pseudoTimeout(() => {
                     image.classList.toggle("onLyric", false);
                     if (infinite) generateLyric(infinite);
                 }, parseFloat(item.end) * debugSpeed);
             }
 
-            if(item.phrase == "--focus") {
-                let craete = setTimeout(() => {
+            if (item.phrase == "--focus") {
+                let craete = pseudoTimeout(() => {
                     image.classList.toggle("onLyric", false);
                 }, parseFloat(item.begin) * debugSpeed);
 
-                let destroy = setTimeout(() => {                    
+                let destroy = pseudoTimeout(() => {
                     image.dataset.type = item.type;
                     lyricDom.dataset.type = item.type;
                     image.classList.toggle("onLyric", true);
@@ -374,17 +420,17 @@
 
                 return;
             }
-            
+
 
             let el = addItem(item.phrase);
             el.dataset.type = item.type;
 
-            let create = setTimeout(() => {
+            let create = pseudoTimeout(() => {
                 animate(el).open();
                 organizeItens();
             }, parseFloat(item.begin) * debugSpeed);
 
-            destroy = setTimeout(() => {
+            destroy = pseudoTimeout(() => {
                 removeEl(el);
             }, parseFloat(item.end) * debugSpeed);
 
@@ -396,7 +442,7 @@
     let lock = false;
     const button = document.querySelector("#playAudio");
     button.addEventListener('click', () => {
-        if(lock) return;
+        if (lock) return;
         lock = true;
 
         // go fullscreen
@@ -414,15 +460,15 @@
         audio.pause();
         audio.currentTime = 0;
 
-        setTimeout(() => {
+        pseudoTimeout(() => {
             audio.play();
             generateLyric();
             lock = false;
             button.classList.toggle("lock", false);
         }, 5000);
     })
-    
-    if(audioless){
+
+    if (audioless) {
         button.style.display = "none";
         generateLyric(true);
     }
@@ -582,7 +628,7 @@
                 firstTime = false;
                 moveToStart();
 
-                setTimeout(() => {
+                pseudoTimeout(() => {
                     transform(duration);
                 }, 500);
             } else {
@@ -599,19 +645,19 @@
 
             transform(duration);
 
-            clearTimeout(transitionTimeOut);
-            setTimeout(() => {
+            clearPseudoTimeout(transitionTimeOut);
+            pseudoTimeout(() => {
                 generateTransition();
             }, duration + 500);
         }
 
         generateTransition();
 
-        setTimeout(() => {
-            clearTimeout(transitionTimeOut);
+        pseudoTimeout(() => {
+            clearPseudoTimeout(transitionTimeOut);
             let waitMs = removeBgItens();
 
-            setTimeout(() => {
+            pseudoTimeout(() => {
                 generateBgItens();
             }, waitMs);
         }, restartDuration);
